@@ -1,11 +1,255 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+:root{
+    --color-1: #2e4756;
+    --color-1-dark: #1a2a32;
+    --color-1-light: #d3d3d3;
+    --color-2: #3cc4bf;
+    --color-3: #f2b147;
+}
+
+*,
+*::before,
+*::after{
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    box-sizing: inherit;
+}
+
+html,
+body{
+    height: 100%;
+    background-color: var(--color-1-dark);
+}
+
 html{
     box-sizing: border-box;
     font-size: 62.5%;
     scroll-behavior: smooth;
 }
 
-*,
-*::before,
-*::after{
-    box-sizing: inherit;
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+a{
+    color: #0b80ce;
+}
+
+@media (min-width: 768px){
+    body{
+        font-size: 1.6rem;
+    }
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3, 8rem);
+    grid-template-rows: 5rem repeat(3, 8rem) 6rem;
+    gap: .5rem;
+}
+
+@media (min-width: 768px){
+    .grid{
+        width: 49rem;
+        grid-template-columns: repeat(3, 15rem);
+        grid-template-rows: 5rem repeat(3, 15rem) 6rem;
+        gap: 2rem;
+    }
+}
+
+.turn{
+    align-self: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    color: var(--color-3);
+}
+
+.turn p{
+    font-size: 1.4rem;
+    animation: turn-text-animation .6s ease-in-out;
+}
+
+@keyframes turn-text-animation {
+    0%{
+        opacity: 0;
+        transform: translateX(-2rem);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.turn svg{
+    font-size: 1.8rem;
+    margin-left: 1rem;
+    animation: turn-icon-animation .6s ease-in-out;
+}
+
+@keyframes turn-icon-animation {
+    0%{
+        transform: scale(1);
+    }
+    25%{
+        transform: scale(1.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+.menu{
+    position: relative;
+}
+
+.menu-btn{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 1rem;
+    color: white;
+    background-color: rgba(211, 211, 211, 0.05);
+    border: .1rem solid transparent;
+}
+
+.menu-btn:focus,
+.menu-btn:hover{
+    background-color: rgba(211, 211, 211, 0.07);
+}
+
+.items{
+    padding: 1rem;
+    width: 100%;
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #203139;
+    border-radius: .2rem;
+    z-index: 10;
+}
+
+.items button{
+    padding: .8rem;
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+.items button:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.square{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    background-color: var(--color-1);
+    border-radius: 1rem;
+    transition: transform .1s ease-in-out;
+}
+
+.square:hover{
+    cursor: pointer;
+    opacity: 90%;
+    transform: scale(.98);
+}
+
+.score{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+footer{
+    color: white;
+    font-size: 1.6rem;
+}
+
+.modal{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-contents{
+    height: 15rem;
+    width: 100%;
+    max-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    color: white;
+    font-size: 1.6rem;
+}
+
+.modal-contents button{
+    padding: 1rem;
+    background-color: var(--color-2);
+    border-radius: .5rem;
+    border: none;
+    cursor: pointer;
+}
+
+/* Utilities */
+
+.hidden{
+display: none;
+}
+
+.color-player-1{
+    color: var(--color-3);
+}
+
+.color-player-2{
+    color: var(--color-2);
+}
+
+.bg-player-1{
+    background-color: var(--color-3);
+}
+
+.bg-player-2{
+    background-color: var(--color-2);
+}
+
+.bg-tie{
+    background-color: var(--color-1-light);
+}
+
+.shadow{
+    box-shadow: 
+        rgba(0, 0, 0, 0.4) 0 .2rem .4rem,
+        rgba(0, 0, 0, 0.3) 0 .7rem 1.3rem -.3rem,
+        rgba(0, 0, 0, 0.2) 0 -.3rem 0 inset;
+}
+
+.border{
+    border: .1rem solid rgba(211, 211, 211, 0.4);
 }

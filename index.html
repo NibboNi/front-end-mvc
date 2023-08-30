@@ -3,11 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/983143a55b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css">
     <title>Tick Tack Toe</title>
 </head>
 <body>
-    
+    <main>
+        <div class="grid">
+            <div class="turn">
+                <i class="fa-solid fa-x"></i>
+                <p>Player 1, your turn!</p>
+            </div>
+
+            <div class="menu">
+                <button class="menu-btn">
+                    Actions
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+                <div class="items border hidden">
+                    <button>Reset</button>
+                    <button>New Round</button>
+                </div>
+            </div>
+
+            <div id="1" class="square shadow"></div>
+            <div id="2" class="square shadow"></div>
+            <div id="3" class="square shadow"></div>
+            <div id="4" class="square shadow"></div>
+            <div id="5" class="square shadow"></div>
+            <div id="6" class="square shadow"></div>
+            <div id="7" class="square shadow"></div>
+            <div id="8" class="square shadow"></div>
+            <div id="9" class="square shadow"></div>
+
+            <div class="score shadow bg-player-1">
+                <p>Player 1</p>
+                <span>0 wins</span>
+            </div>
+            <div class="score shadow bg-tie">
+                <p>Ties</p>
+                <span>0</span>
+            </div>
+            <div class="score shadow bg-player-2">
+                <p>Player 2</p>
+                <span>0 wins</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><a href="https://github.com/NibboNi/front-end-mvc" target="_blank">Made</a> with JS, HTML & CSS</p>
+    </footer>
+
+    <div class="modal hidden">
+        <div class="modal-contents">
+            <p>Player 1 wins!</p>
+            <button>Play Again</button>
+        </div>
+    </div>
 </body>
 </html>
