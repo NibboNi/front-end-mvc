@@ -1,10 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
 :root{
-    --color-1: #2e4756;
-    --color-1-dark: #1a2a32;
-    --color-1-light: #d3d3d3;
-    --color-2: #3cc4bf;
-    --color-3: #f2b147;
+    --color-1: #292828;
+    --color-1-dark: #111;
+    --color-1-light: #FFB6D9;
+    --color-2: #FEFFAC;
+    --color-3: #45FFCA;
 }
 
 *,
@@ -140,11 +140,25 @@ a{
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
-    background-color: #203139;
-    border-radius: .2rem;
+    background-color: var(--color-1);
+    border-radius: .5rem;
+    animation: items-animation .3s ease-in-out;
     z-index: 10;
 }
 
+@keyframes items-animation {
+    0%{
+        top: 3rem;
+        opacity: 0;
+    }
+    25%{
+        opacity: 0;
+    }
+    100%{
+        top: 6rem;
+        opacity: 1;
+    }
+}
 .items button{
     padding: .8rem;
     background-color: transparent;
@@ -236,7 +250,7 @@ footer{
 
 .modal-contents button{
     padding: 1rem;
-    background-color: var(--color-2);
+    background-color: var(--color-1-light);
     border-radius: .5rem;
     border: none;
     cursor: pointer;
