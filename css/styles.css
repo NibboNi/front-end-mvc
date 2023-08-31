@@ -127,6 +127,7 @@ a{
 .menu-btn:focus,
 .menu-btn:hover{
     background-color: rgba(211, 211, 211, 0.07);
+    cursor: pointer;
 }
 
 .items{
@@ -138,6 +139,7 @@ a{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    text-align: left;
     background-color: #203139;
     border-radius: .2rem;
     z-index: 10;
@@ -146,6 +148,7 @@ a{
 .items button{
     padding: .8rem;
     background-color: transparent;
+    text-align: left;
     color: white;
     border: none;
 }
@@ -171,6 +174,28 @@ a{
     cursor: pointer;
     opacity: 90%;
     transform: scale(.98);
+}
+
+.square-animated{
+    animation: square-clicked-animation .6s ease-in-out;
+}
+
+@keyframes square-clicked-animation {
+    0%{
+        transform: scale(1);
+    }
+    25%{
+        transform: scale(.5);
+    }
+    50%{
+        transform: scale(1.1);
+    }
+    75%{
+        transform: scale(.8);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
 
 .score{
