@@ -5,6 +5,10 @@ const App = {
         resetBtn: document.querySelector("[data-id=\"reset-btn\"]"), 
         newRoundBtn: document.querySelector("[data-id=\"new-round-btn\"]"), 
         squares: document.querySelectorAll("[data-id=\"square\"]"),
+        modal: document.querySelector("[data-id=\"modal\"]"),
+        modalText: document.querySelector("[data-id=\"modal-text\"]"),
+        modalBtn: document.querySelector("[data-id=\"modal-btn\"]"),
+        turn: document.querySelector("[data-id=\"turn\"]"),
     },
 
     state: {
@@ -59,6 +63,15 @@ const App = {
             // New round code...
         });
 
+        App.$.modalBtn.addEventListener("click", event => {
+            App.state.moves = [];
+            App.$.squares.forEach(square => {
+                square.replaceChildren()
+                square.classList.remove("square-animated");
+            });
+            App.$.modal.classList.add("hidden");
+        })
+
         App.$.squares.forEach( square => {
             square.addEventListener("click", e => {
                 const hasMove = squareId => {
@@ -73,35 +86,50 @@ const App = {
                 const lastMove = App.state.moves.at(-1);
                 const getOppositePlayer = playerId => playerId == 1 ? 2 : 1;
                 const currentPlayer = App.state.moves.length == 0 ? 1 : getOppositePlayer(lastMove.playerId);
-                
+                const nextPlayer = getOppositePlayer(currentPlayer);
                 App.state.moves.push({
                     squareId: +square.id,
                     playerId: currentPlayer,
                 });
                 
 
-                const icon = document.createElement("i");
-                icon.classList.add(`color-player-${currentPlayer}`);
+                const squareIcon = document.createElement("i");
+                squareIcon.classList.add(`color-player-${currentPlayer}`);
+                const turnIcon = document.createElement("i");
+                turnIcon.classList.add(`color-player-${nextPlayer}`);
+
+                const turnLabel = document.createElement("p")
+                turnLabel.classList = `color-player-${nextPlayer}`;
+                turnLabel.textContent = `Player ${nextPlayer}, your turn!`;
                 
                 if(currentPlayer == 1){
-                    icon.classList.add("fa-solid", "fa-x");
+                    squareIcon.classList.add("fa-solid", "fa-x");
+                    turnIcon.classList.add("fa-solid", "fa-o");
                 }
                 else{
-                    icon.classList.add("fa-solid", "fa-o");
+                    squareIcon.classList.add("fa-solid", "fa-o");
+                    turnIcon.classList.add("fa-solid", "fa-x");
                 }
+
+                App.$.turn.replaceChildren(turnIcon, turnLabel);
                 
                 square.classList.add("square-animated");
-                square.appendChild(icon);
+                square.appendChild(squareIcon);
 
                 const game = App.getGameStatus(App.state.moves);                
 
                 if(game.status === "complete"){
+                    let message = "";
+                    App.$.modal.classList.remove("hidden");
+
                     if(game.winner){
-                        alert(`Player ${game.winner} Wins!`);
+                        message = `Player ${game.winner} wins!`;
                     }
                     else{
-                        alert("It's a tie...");
+                        message = `It's a tie.`;
                     }
+
+                    App.$.modalText.textContent = message;
                 }
             });
         });
