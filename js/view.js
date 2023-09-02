@@ -13,6 +13,9 @@ export default class View{
         this.$.modalText = this.#qs("[data-id=\"modal-text\"]");
         this.$.modalBtn = this.#qs("[data-id=\"modal-btn\"]");
         this.$.turn = this.#qs("[data-id=\"turn\"]");
+        this.$.p1wins = this.#qs("[data-id=\"p1-wins\"]");
+        this.$.p2wins = this.#qs("[data-id=\"p2-wins\"]");
+        this.$.ties = this.#qs("[data-id=\"ties\"]");
 
         this.$$.squares = this.#qsAll("[data-id=\"square\"]");
 
@@ -40,6 +43,11 @@ export default class View{
 
     // DOM helper methods
     // # makes a propertie/method private
+    updateScoreboard(p1wins, p2wins, ties){
+        this.$.p1wins.textContent = `${p1wins} wins`;
+        this.$.p2wins.textContent = `${p2wins} wins`;
+        this.$.ties.textContent = `${ties} ties`;
+    }
     openModal(message, btnClass){
         this.$.modal.classList.remove("hidden");
         this.$.modalText.textContent = message;
