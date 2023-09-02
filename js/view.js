@@ -25,6 +25,7 @@ export default class View{
     
     bindResetEvent(handler){
         this.$.resetBtn.addEventListener("click", handler);
+        this.$.modalBtn.addEventListener("click", handler);
     }
     
     bindNewRoundEvent(handler){
@@ -45,13 +46,37 @@ export default class View{
         this.$.modalBtn.classList.add(btnClass);
     }
 
+    #closeModal(){
+        this.$.modal.classList.add("hidden");
+    }
+
+    closeAll(){
+        this.#closeModal();
+        this.#closeMenu();
+    }
+    
+    clearMoves(){
+        
+        this.$$.squares.forEach(square => {
+            square.classList.remove("square-animated");
+            square.replaceChildren();
+        });
+    }
+    
+    #closeMenu(){
+        this.$.menuItems.classList.add("hidden");
+        this.$.menuBtn.classList.remove("border");
+        
+        const icon = this.$.menuBtn.querySelector("svg");
+        icon.classList.add("fa-chevron-down");
+        icon.classList.remove("fa-chevron-up");
+    }
+    
     #toggleMenu(){
         this.$.menuItems.classList.toggle("hidden");
         this.$.menuBtn.classList.toggle("border");
 
         const icon = this.$.menuBtn.querySelector("svg");
-        icon.classList.toggle("fa-chevron-down");
-        icon.classList.toggle("fa-chevron-up");
     }
 
     handlePlayerMove(squareE, player){
