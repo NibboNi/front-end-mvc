@@ -1,9 +1,14 @@
+// mvC
+
+import View from "./view.js";
+import Store from "./store.js";
+
 const App = {
     $: {
         menu: document.querySelector("[data-id=\"menu\"]"),
-        menuItems: document.querySelector("[data-id=\"menu-items\"]"), 
-        resetBtn: document.querySelector("[data-id=\"reset-btn\"]"), 
-        newRoundBtn: document.querySelector("[data-id=\"new-round-btn\"]"), 
+        menuItems: document.querySelector("[data-id=\"menu-items\"]"),
+        resetBtn: document.querySelector("[data-id=\"reset-btn\"]"),
+        newRoundBtn: document.querySelector("[data-id=\"new-round-btn\"]"),
         squares: document.querySelectorAll("[data-id=\"square\"]"),
         modal: document.querySelector("[data-id=\"modal\"]"),
         modalText: document.querySelector("[data-id=\"modal-text\"]"),
@@ -95,6 +100,7 @@ const App = {
 
                 const squareIcon = document.createElement("i");
                 squareIcon.classList.add(`color-player-${currentPlayer}`);
+                
                 const turnIcon = document.createElement("i");
                 turnIcon.classList.add(`color-player-${nextPlayer}`);
 
@@ -136,4 +142,57 @@ const App = {
     },
 }
 
-document.addEventListener("DOMContentLoaded", App.init);
+const players = [
+    {
+        id: 1,
+        name: "Player 1",
+        iconClass: "fa-x",
+        colorClass: "color-player-1",
+    },
+    {
+        id: 2,
+        name: "Player 2",
+        iconClass: "fa-o",
+        colorClass: "color-player-2",
+    },
+]
+
+function init(){
+    const view = new View();
+    const store = new Store(players);
+
+    console.log(store.game);
+
+    view.bindResetEvent((event) => {
+        console.log("Reset event");
+        console.log(event);
+    });
+
+    view.bindNewRoundEvent((event) => {
+        console.log("New Round event");
+        console.log(event);
+    });
+    
+    view.bindPlayerMoveEvent((square) => {
+        const existingMove = store.game.moves.find(move => move.squareId == +square.id);
+        square.classList.add("square-animated");
+
+        if(existingMove){
+            return;
+        }
+        
+        view.handlePlayerMove(square, store.game.currentPlayer);
+
+        store.playerMove(+square.id)
+        
+        if(store.game.status.isComplete){
+
+            view.openModal(store.game.status.winner ? `${store.game.status.winner.name} wins!`: "Its a tie...", store.game.status.winner ? `bg-player-${store.game.status.winner.id}` : "bg-tie");
+            return;
+        }
+
+        view.setTurnIndicator(store.game.currentPlayer);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", init);
