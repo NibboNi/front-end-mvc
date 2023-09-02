@@ -2,8 +2,8 @@
 :root{
     --color-1: #292828;
     --color-1-dark: #111;
-    --color-1-light: #FFB6D9;
-    --color-2: #FEFFAC;
+    --color-1-light: #FEFFAC;
+    --color-2: #FFB6D9;
     --color-3: #45FFCA;
 }
 
@@ -250,7 +250,6 @@ footer{
 
 .modal-contents button{
     padding: 1rem;
-    background-color: var(--color-1-light);
     border-radius: .5rem;
     border: none;
     cursor: pointer;
@@ -291,4 +290,5 @@ display: none;
 
 .border{
     border: .1rem solid rgba(211, 211, 211, 0.4);
+    transition: border .3s ease-in-out;
 }
