@@ -21,31 +21,20 @@ function init(){
     const view = new View();
     const store = new Store("live-t3-storage-key", players);
 
-    function initView(){
-        view.closeAll();
-        view.clearMoves();
-        view.setTurnIndicator(store.game.currentPlayer);
-        view.updateScoreboard(store.stats.playerWithStats[0].wins, store.stats.playerWithStats[1].wins, store.stats.ties);
-        view.initializeMoves(store.game.moves);
-    }
-
     window.addEventListener("storage", () =>  {
-        initView();
+        view.render(store.game, store.stats);
     })
 
-    initView();
-
+    view.render(store.game, store.stats);
+    
     view.bindResetEvent((event) => {
         store.reset();
-        initView();
+        view.render(store.game, store.stats);
     });
     
     view.bindNewRoundEvent((event) => {
         store.newRound();
-        view.closeAll();
-        view.clearMoves();
-        view.setTurnIndicator(store.game.currentPlayer);
-        view.updateScoreboard(store.stats.playerWithStats[0].wins, store.stats.playerWithStats[1].wins, store.stats.ties);
+        view.render(store.game, store.stats);
     });
     
     view.bindPlayerMoveEvent((square) => {
@@ -55,18 +44,10 @@ function init(){
         if(existingMove){
             return;
         }
-        
-        view.handlePlayerMove(square, store.game.currentPlayer);
 
-        store.playerMove(+square.id)
-        
-        if(store.game.status.isComplete){
+        store.playerMove(+square.id);
 
-            view.openModal(store.game.status.winner ? `${store.game.status.winner.name} wins!`: "Its a tie...", store.game.status.winner ? `bg-player-${store.game.status.winner.id}` : "bg-tie");
-            return;
-        }
-
-        view.setTurnIndicator(store.game.currentPlayer);
+        view.render(store.game, store.stats);
     });
 }
 
