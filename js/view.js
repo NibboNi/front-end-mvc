@@ -24,6 +24,22 @@ export default class View{
         });
     }
 
+    render(game, stats){
+        const {playerWithStats, ties} = stats;
+        const {moves, currentPlayer, status:{isComplete,winner}} = game;
+
+        this.#closeAll();
+        this.#clearMoves();
+        this.#updateScoreboard(playerWithStats[0].wins, playerWithStats[1].wins, ties);
+        this.#initializeMoves(moves);
+        
+        if(isComplete){
+            this.#openModal(winner ? `${winner.name} wins!`: "Its a tie...");
+        }
+
+        this.#setTurnIndicator(currentPlayer)
+    }
+
     // Register all event listeners
     
     bindResetEvent(handler){
@@ -43,12 +59,12 @@ export default class View{
 
     // DOM helper methods
     // # makes a propertie/method private
-    updateScoreboard(p1wins, p2wins, ties){
+    #updateScoreboard(p1wins, p2wins, ties){
         this.$.p1wins.textContent = `${p1wins} wins`;
         this.$.p2wins.textContent = `${p2wins} wins`;
         this.$.ties.textContent = `${ties} ties`;
     }
-    openModal(message, btnClass){
+    #openModal(message, btnClass){
         this.$.modal.classList.remove("hidden");
         this.$.modalText.textContent = message;
         this.$.modalBtn.classList.add(btnClass);
@@ -58,12 +74,12 @@ export default class View{
         this.$.modal.classList.add("hidden");
     }
 
-    closeAll(){
+    #closeAll(){
         this.#closeModal();
         this.#closeMenu();
     }
     
-    clearMoves(){
+    #clearMoves(){
         
         this.$$.squares.forEach(square => {
             square.classList.remove("square-animated");
@@ -71,12 +87,12 @@ export default class View{
         });
     }
     
-    initializeMoves(moves){
+    #initializeMoves(moves){
         this.$$.squares.forEach(square => {
             const existingMove = moves.find(move => move.squareId == +square.id);
 
             if(existingMove){
-                this.handlePlayerMove(square, existingMove.player)
+                this.#handlePlayerMove(square, existingMove.player)
             }
         })
     }
@@ -96,13 +112,13 @@ export default class View{
         icon.classList.toggle("fa-chevron-up");
     }
 
-    handlePlayerMove(squareE, player){
+    #handlePlayerMove(squareE, player){
         const icon = document.createElement("i");
         icon.classList.add("fa-solid", player.iconClass, player.colorClass);
         squareE.replaceChildren(icon);
     }
 
-    setTurnIndicator(player){
+    #setTurnIndicator(player){
         const icon = document.createElement("i");
         icon.classList.add("fa-solid", player.iconClass, player.colorClass);
 
