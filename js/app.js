@@ -1,5 +1,4 @@
 // mvC
-
 import View from "./view.js";
 import Store from "./store.js";
 
@@ -22,14 +21,23 @@ function init(){
     const view = new View();
     const store = new Store("live-t3-storage-key", players);
 
-    view.bindResetEvent((event) => {
+    function initView(){
         view.closeAll();
-        
-        store.reset();
-        
         view.clearMoves();
         view.setTurnIndicator(store.game.currentPlayer);
         view.updateScoreboard(store.stats.playerWithStats[0].wins, store.stats.playerWithStats[1].wins, store.stats.ties);
+        view.initializeMoves(store.game.moves);
+    }
+
+    window.addEventListener("storage", () =>  {
+        initView();
+    })
+
+    initView();
+
+    view.bindResetEvent((event) => {
+        store.reset();
+        initView();
     });
     
     view.bindNewRoundEvent((event) => {

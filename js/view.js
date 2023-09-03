@@ -71,13 +71,19 @@ export default class View{
         });
     }
     
+    initializeMoves(moves){
+        this.$$.squares.forEach(square => {
+            const existingMove = moves.find(move => move.squareId == +square.id);
+
+            if(existingMove){
+                this.handlePlayerMove(square, existingMove.player)
+            }
+        })
+    }
+
     #closeMenu(){
         this.$.menuItems.classList.add("hidden");
         this.$.menuBtn.classList.remove("border");
-        
-        const icon = this.$.menuBtn.querySelector("svg");
-        icon.classList.add("fa-chevron-down");
-        icon.classList.remove("fa-chevron-up");
     }
     
     #toggleMenu(){
@@ -85,6 +91,9 @@ export default class View{
         this.$.menuBtn.classList.toggle("border");
 
         const icon = this.$.menuBtn.querySelector("svg");
+
+        icon.classList.toggle("fa-chevron-down");
+        icon.classList.toggle("fa-chevron-up");
     }
 
     handlePlayerMove(squareE, player){
