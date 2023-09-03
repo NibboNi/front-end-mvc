@@ -21,33 +21,31 @@ function init(){
     const view = new View();
     const store = new Store("live-t3-storage-key", players);
 
+    store.addEventListener("statechange", () => {
+        view.render(store.game, store.stats);
+    });
+
     window.addEventListener("storage", () =>  {
         view.render(store.game, store.stats);
-    })
+    });
 
     view.render(store.game, store.stats);
     
     view.bindResetEvent((event) => {
         store.reset();
-        view.render(store.game, store.stats);
     });
     
     view.bindNewRoundEvent((event) => {
         store.newRound();
-        view.render(store.game, store.stats);
     });
     
     view.bindPlayerMoveEvent((square) => {
         const existingMove = store.game.moves.find(move => move.squareId == +square.id);
-        square.classList.add("square-animated");
-
         if(existingMove){
             return;
         }
 
         store.playerMove(+square.id);
-
-        view.render(store.game, store.stats);
     });
 }
 

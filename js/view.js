@@ -54,6 +54,7 @@ export default class View{
     bindPlayerMoveEvent(handler){
         this.$$.squares.forEach(square => {
             square.addEventListener("click", () => handler(square));
+            square.classList.add("square-animated");
         });
     }
 
@@ -80,7 +81,6 @@ export default class View{
     }
     
     #clearMoves(){
-        
         this.$$.squares.forEach(square => {
             square.classList.remove("square-animated");
             square.replaceChildren();
@@ -144,4 +144,12 @@ export default class View{
 
         return e;
     }
+
+    // #delegate(e, selector, eventKey, handler){
+    //     e.addEventListener(eventKey, (event) => {
+    //         if(event.target.matches(selector)){
+    //             handler(event.target);
+    //         }
+    //     });
+    // }
 }
