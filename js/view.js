@@ -27,7 +27,7 @@ export default class View{
     render(game, stats){
         const {playerWithStats, ties} = stats;
         const {moves, currentPlayer, status:{isComplete,winner}} = game;
-
+        
         this.#closeAll();
         this.#clearMoves();
         this.#updateScoreboard(playerWithStats[0].wins, playerWithStats[1].wins, ties);
@@ -36,8 +36,9 @@ export default class View{
         if(isComplete){
             this.#openModal(winner ? `${winner.name} wins!`: "Its a tie...");
         }
-
+        
         this.#setTurnIndicator(currentPlayer)
+        // this.#animteSquare();
     }
 
     // Register all event listeners
